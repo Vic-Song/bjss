@@ -1,0 +1,39 @@
+<br/>
+<br/>
+<div class="row" >
+<div class="col-lg-4 col-lg-offset-4">
+ <p class="h2 text-center"> 注册 </p>
+<div  style="min-height: 800px">
+
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email,"邮箱" %><br />
+    <%= f.email_field :email, autofocus: true,class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password,"密码" %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> 个字符至少)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" ,class:"form-control"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation,"确认密码" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off",class:"form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "注册",class:"btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+</div>
+</div>
+</div>

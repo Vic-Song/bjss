@@ -1,0 +1,49 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display   -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand"> <%= image_tag("logo.png", size: "50x50")%></div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         <li><%= link_to '首页', home_index_path, class:"h4" %></li>
+        <li><%= link_to '课程', courses_path, class:"h4"%></li>
+      </ul>
+
+      <!-- search form -->
+      <%= form_tag courses_path, class:"navbar-form navbar-left h4", :method => 'get' do %>
+         <%= text_field_tag :search_text, params[:search_text],class:"form-control h4",placeholder:"搜索课程" %>
+         <%= submit_tag '搜索',class:"btn btn-success " %>
+      <% end %>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+        <% if user_signed_in? %>
+          <a href="#" class="dropdown-toggle h4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          <%if current_user.admin?%>
+          <li class="h4"><%= link_to '管理员面板', home_admin_path%></li>
+          <li class="h4"><%= link_to '用户中心', home_userpanel_path%></li>
+            <li class="h4"><%= link_to '退出', destroy_user_session_path, :method => :delete %></li>
+            <% else %>
+            <li class="h4"><%= link_to '用户中心', home_userpanel_path%></li>
+            <li class="h4"><%= link_to '退出', destroy_user_session_path, :method => :delete %></li>
+            <% end %>
+          </ul>
+          <% else %>
+          <li><%= link_to '登录', new_user_session_path, class:"h4" %></li>
+          <% end %>
+        </li>
+      </ul>
+      </div>
+    </div>
+</nav>
+

@@ -1,0 +1,50 @@
+<div class="row" >
+<div class="col-lg-4 col-lg-offset-4">
+
+<div style="min-height: 764px">
+
+<%= form_for(@course) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+      <% @course.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title,"标题" %><br>
+    <%= f.text_field :title,class:"form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :teacher,"授课教师" %><br>
+    <%= f.text_field :teacher,class:"form-control" %>
+  </div>
+    <div class="field">
+    <%= f.label :teacher_intro,"教师简介" %><br>
+    <%= f.text_area :teacher_intro,class:"form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :description,"课程描述" %><br>
+    <%= f.text_area :description,class:"form-control" %>
+  </div>
+    <div class="field">
+    <%= f.label :thumbnail_url,"特色图片" %><br>
+    <%= f.file_field :thumbnail_url %>
+  </div>
+      <div class="field">
+    <%= f.label :trailer_url,"简介视频" %><br>
+    <%= f.text_field :trailer_url,class:"form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "新建课程",class:"btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+
+</div>
+</div>
+</div>

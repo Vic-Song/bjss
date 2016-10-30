@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="page-header">
+    <h2><%= @post.course.title%></h2>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="h4"><%= link_to "视频区",@post.course.chapters.first.videos.first%></li>
+    <li class="active h4"><%= link_to "讨论区",@post,style:"font-weight:bolder" %> </li>
+  </ul>
+</div>
+<br/>
+<div style="background-color: #fff; min-height: 682px;">
+  <div class="container" >
+    <div class="row">
+      <div class="col-lg-4">
+        <!--<% if @post.course.posts.count!=0%>
+          <ul class="nav nav-pills nav-stacked">
+          <% @post.course.posts.each do |p| %>
+          <% if p.title==@post.title %>
+          <li class="h4 active"><%=link_to p.title,p%></li>    
+          <% else %>
+          <li class="h4"> <%=link_to p.title,p%></li>    
+          <% end %>
+        <% end %>
+          </ul>
+        <% else %>
+        <% end %>-->
+        <div class="list-group">
+        <% @posts.each do |p| %>
+        	<% if p.title==@post.title %>
+        	<li class="list-group-item active"><span class="badge"><%= p.replies.count %></span><%= link_to p.title,p,class:"h4" %> </li>
+        	<!--<%= link_to p.title,p,class:"list-group-item active" %><%= p.replies.count %>-->
+        	<% else %>
+        	<!--<%= link_to p.title,p,class:"list-group-item" %><span class="badge"><%= p.replies.count%></span>-->
+        	<li class="list-group-item"><span class="badge"><%= p.replies.count %></span><%= link_to p.title,p,class:"h4" %> </li>
+        	<% end %>
+        <% end %>
+        </div>
+        </div>
+
+        <div class="col-lg-8 ">
+        <% if user_signed_in?%>
+        <div class="" style="text-align: right;">
+        <%= link_to "新建话题",new_post_path(course_id:@post.course.id),class:"btn btn-primary"%>
+        </div>
+        <% else %>
+        <br/>
+        <% end %>
+
+        <br/>
+        <div class="panel panel-default">
+        	        <div class="panel-heading">
+	        	<p class="h5" style="text-align: right;"><span class="glyphicon glyphicon-user"></span> <%= @post.user_email%>
+	        	<span class="glyphicon glyphicon-time"></span> <%= time_tag @post.created_at%>
+		<% if user_signed_in?%>
+		<% if @post.user_email==current_user.email %>  &nbsp;&nbsp;&nbsp;  
+		<%= link_to '刪除', @post, method: :delete, data: { confirm: '确定删除？' }%>  
+		<% end %>
+		<% end %>
+	        	</p>
+	        </div>
+	        <div class="panel-body">
+	        <p class="h2 text-center"><%= @post.title%></p> 
+	        <p class="h4" style="line-height: 35px"><%= @post.content%></p> 
+	        </div>
+
+        </div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+			<th>评论 
+			<span class="badge">
+				<%= @post.replies.count%>
+			</span>
+			
+			</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			
+			<% @replies.each do |reply| %>
+			 <%if reply.post_id==@post.id%>
+			 <tr>
+			<td>
+				<div class="media-body">
+					<p class="h5"><%= reply.user_email%> <small><%= time_tag reply.updated_at %></small>
+					<% if user_signed_in?%>
+					<% if reply.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+					<%= link_to '刪除', reply, method: :delete, data: { confirm: '确定删除？' }%>  
+					<% end %>
+					<% end %>
+					</p> 
+					<h4><%= reply.content%></h4>
+				</div>
+			</td>
+			</tr>
+			<% end %>
+			<% end %>
+			
+		</tbody>
+	</table>
+
+	<% if user_signed_in? %>
+	<%= form_for(@reply) do |f| %>
+	  <div class="field">    
+	    <%= f.text_field :content, class:"form-control" %>
+	  </div>
+	  <div class="field" style="display: none">
+	    <%= f.label :post_id %><br>
+	    <%= f.text_field :post_id %>
+	  </div>
+	  <div class="actions">
+	  <br/>
+	    <%= f.submit '评论',class:"btn btn-success"%>
+	  </div>
+	<% end %>
+	<% else %>
+	<p class="h4 text-center"> <font color="red"> 请<%= link_to '登录', new_user_session_path %>后评论</font></p>
+	
+	<% end %>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>

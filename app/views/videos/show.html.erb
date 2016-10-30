@@ -1,0 +1,119 @@
+<div class="container">
+  <div class="page-header">
+    <h2><%= @video.chapter.course.title%></h2>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="active h4"><%= link_to "视频区",@video.chapter.course.chapters.first.videos.first, style:"font-weight:bolder"%></li>
+    <%if @video.chapter.course.posts.count==0%>
+    <li class="h4"><%= link_to "讨论区",posts_path(course_id:@video.chapter.course.id)%> </li>
+    <% else %>
+    <li class="h4"><%= link_to "讨论区",@video.chapter.course.posts.first%> </li>
+    <% end %>
+  </ul>
+</div>
+<br/>
+<div style="background-color: #fff; min-height: 682px;">
+<div class="container" >
+  <div class="row">
+  <div class="col-lg-4">
+    <ul class="nav nav-pills nav-stacked">
+    <% @video.chapter.course.chapters.each do |ch| %>
+      <ul class="nav nav-pills nav-stacked">
+      <h4><%=ch.title%></h4> 
+      <% ch.videos.each do |v|%>
+      <% if v.title==@video.title%>
+      <li class="active"> <%= link_to v.title, v %></li>
+      <% else %>
+       <li> <%= link_to v.title, v %></li>
+      <% end %>
+    <% end %>
+    </ul>
+    <% end %>
+    </ul>
+  </div>
+  <div class="col-lg-8 ">
+    <h3><%= @video.title%> </h3>
+    <%= video_tag(@video.video_url, width:"100%", controls:true, preload:"none",poster:"1.jpg") %>
+    <br/><br/>
+
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" 
+              href="#collapseOne">
+              <p class="h4"> 视频信息 </p>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+          <div class="panel-body">
+          <p class="h5"><strong>视频时长:</strong>  <%=@video.duration%></p>  
+          <p class="h5"><strong>视频作者:</strong>  <%=@video.author%></p>
+          <p class="h5"><strong>视频简介:</strong>  <%=@video.description%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+        <th>评论 
+        <span class="badge">
+          <%= @video.comments.count%>
+        </span>
+        
+        </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        
+        <% @comments.each do |comment| %>
+         <%if comment.video_id==@video.id%>
+         <tr>
+        <td>
+          <div class="media-body">
+            <p><h5><%= comment.user_email%> <small><%= time_tag comment.updated_at %></small>
+            <% if user_signed_in?%>
+            <% if comment.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+            <%= link_to '刪除', comment, method: :delete, data: { confirm: 'Are you sure?' }%>  
+            <% end %>
+            <% end %>
+            </h5>  </p> 
+            <h4><%= comment.content%></h4>
+          </div>
+        </td>
+        </tr>
+        <% end %>
+        <% end %>
+        
+      </tbody>
+    </table>
+
+      <% if user_signed_in? %>
+      <%= form_for(@comment) do |f| %>
+        <div class="field">    
+          <%= f.text_field :content, class:"form-control" %>
+        </div>
+        <div class="field" style="display: none">
+          <%= f.label :video_id %><br>
+          <%= f.text_field :video_id %>
+        </div>
+        <div class="actions">
+        <br/>
+          <%= f.submit '评论',class:"btn btn-success"%>
+        </div>
+      <% end %>
+      <% else %>
+      <p class="h4 text-center"> <font color="red"> 请<%= link_to '登录', new_user_session_path %>后评论</font></p>
+      
+      <% end %>
+
+  </div>
+  </div>
+
+                                                                                                                                                                                            
+</div>
+</div>
+<br/>

@@ -1,0 +1,121 @@
+<div style="background-color: #f3f3f3">
+<div class="container">
+<div class="page-header">
+
+       <h1><%= @course.title %></h1>
+      <!--<button class="btn"><%= link_to 'Edit', edit_course_path(@course) %> </button>
+      <button class="btn"><%= link_to 'Back', courses_path %> </button>
+      <button class="btn"><%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %> </button>-->
+
+  </div>
+  <div class="container" >
+  <div class="row">
+   <div class="col-md-6 col-lg-6">
+  <%= video_tag(@course.trailer_url, width:"100%", controls: true, preload:"auto",poster:@course.thumbnail_url) %>
+  </div>
+  <div class="col-md-6 col-lg-6">
+  <div class="thumbnail" >
+    <div class="caption" style="height: 230px">
+    <p class="h3">课程描述</p>
+    <p class="h4", style="line-height: 30px"> <%= @course.description%></p>
+    </div> 
+    <div class="caption" align="right">
+     <%= link_to '进入课程', @course.chapters.first.videos.first, class:"btn btn-primary btn-lg",style:"color:white" %>
+    </div>
+  </div>
+  </div>
+ </div>
+ </div>
+
+ <div class="container">
+ <nav id="navbar-example" class="navbar navbar-inverse navbar-static" role="navigation">
+   <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse"
+         data-target=".bs-js-navbar-scrollspy">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+   </div>
+   <div class="collapse navbar-collapse bs-js-navbar-scrollspy">
+      <ul class="nav navbar-nav">
+         <li><a href="#content">课程内容</a></li>
+         <li><a href="#teacher">授课教师</a></li>
+         <!--<li class="dropdown">
+            <a href="#" id="navbarDrop1" class="dropdown-toggle"
+               data-toggle="dropdown">Java
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu"
+               aria-labelledby="navbarDrop1">
+               <li><a href="#jmeter" tabindex="-1">jmeter</a></li>
+               <li><a href="#ejb" tabindex="-1">ejb</a></li>
+               <li class="divider"></li>
+               <li><a href="#spring" tabindex="-1">spring</a></li>
+            </ul>
+         </li>-->
+      </ul>
+   </div>
+</nav>
+<div class="" style="background-color: #fff; padding-left: 20px">
+<div data-spy="scroll" data-target="#navbar-example" data-offset="0"
+   style="height:500px;overflow:auto; position: relative;padding: 15px">
+     <h4 id="content"><strong><blockquote> 课程内容</blockquote></strong></h4>
+     <ul>
+      <% @course.chapters.each do |ch|%>
+      <li> <p> <%= ch.title%></p>
+        <ul>
+          <% ch.videos.each do |v|%>
+          <li><p> <%= v.title%></p></li>
+          <% end %>
+        </ul>
+      </li>
+      <% end %>
+     </ul>
+     <br/><br/><br/>
+     <h4 id="teacher"><strong><blockquote> 授课教师</blockquote></strong></h4>
+     <p class="h3"><%= @course.teacher%> </p>
+     <p style="line-height: 40px"><%= @course.teacher_intro%></p>
+</div>
+</div>
+</div>
+
+  <!--<div class="panel panel-default">
+  <div class="panel-heading"> 
+    <p><strong>教师:</strong> <%= @course.teacher %></p>
+    <p><strong>课程简介:</strong> <%= @course.description %></p>
+  </div>
+  <table class="table">
+    <thead >
+    <tr>
+        <th>章节</th>
+        <th>视频</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @chapters.each do |chapter| %>
+      <% if chapter.course_id==@course.id %>
+        <tr>
+          <td><strong><%= chapter.title %>  <span class="badge"><%= chapter.videos.count%></strong> </td>
+          <% chapter.videos.each do |v|%>
+          <tr>
+          <td></td>
+          <td><%= v.title %></td>
+          <td><%= link_to '查看', v, class:"btn btn-default" %></td>
+          </tr>
+          <% end %>
+        </tr>
+         <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  </div>-->
+
+  
+
+  </div>
+
+  </div>

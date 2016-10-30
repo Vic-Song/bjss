@@ -1,0 +1,40 @@
+<div class="container">
+<div class="page-header">
+
+       <h1><%= @chapter.title %></h1>
+
+  </div>
+
+  <div class="panel panel-default">
+  <div class="panel-heading"> 
+    <p>Decription:<%= @chapter.description %></p>
+  </div>
+  <table class="table">
+    <thead >
+    <tr>
+        <th>Course</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Video url</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @videos.each do |video| %>
+      <% if video.chapter_id==@chapter.id %>
+        <tr>
+          <td><%= video.chapter_id %></td>
+          <td><%= video.title %></td>
+          <td><%= video.description %></td>
+          <!--<td><%= video_tag(video.video_url, size:"320x200", controls: true, autobuffer: true) %></td>-->
+          <td><%= link_to '查看', video, class:"btn btn-default" %></td>
+          <!--<td><button class="btn"><%= link_to 'Edit', edit_video_path(video) %></button></td>
+          <td><button  class="btn"><%= link_to 'Desthoy', video, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>-->
+        </tr>
+         <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+
+  </div>

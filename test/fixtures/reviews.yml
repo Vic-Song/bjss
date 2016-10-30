@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  userinfo: MyString
+  coursename: MyString
+  one: 1.5
+  two: 1.5
+  three: 1.5
+  four: 1.5
+  words: MyText
+
+two:
+  userinfo: MyString
+  coursename: MyString
+  one: 1.5
+  two: 1.5
+  three: 1.5
+  four: 1.5
+  words: MyText

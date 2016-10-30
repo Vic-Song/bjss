@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Userinfo:</strong>
+  <%= @record.userinfo %>
+</p>
+
+<p>
+  <strong>Coursename:</strong>
+  <%= @record.coursename %>
+</p>
+
+<p>
+  <strong>Trace:</strong>
+  <%= @record.trace %>
+</p>
+
+<%= link_to 'Edit', edit_record_path(@record) %> |
+<%= link_to 'Back', records_path %>

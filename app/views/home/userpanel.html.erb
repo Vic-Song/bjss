@@ -1,0 +1,97 @@
+<br/>
+<br/>
+<div class="container" style="min-height: 820px">
+<div class="page-header">
+	<p class="h2"><%=current_user.email%>的用户中心</p>
+</div>
+<div class="row">
+	<div class="col-lg-4">
+	<div class="page-header">
+		<p class="h3"><span class="glyphicon glyphicon-user"></span>  基本信息</p>
+	</div>
+		<p class="h4"><strong>用户邮箱:</strong> <%= current_user.email%></p>
+		<p class="h4"><strong>登陆次数:</strong><%= current_user.sign_in_count%></p>
+		<p class="h4"><strong>本次登陆 IP:</strong><%= current_user.last_sign_in_ip%></p>
+	</div>
+	<div class="col-lg-8">
+	<div class="page-header">
+		<p class="h3"><span class="glyphicon glyphicon-globe"></span> 我的足迹</p>
+	</div>
+	      <div class="panel panel-primary">
+	        <div class="panel-heading">
+	          <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#accordion" 
+	              href="#One">
+	              <p class="h4"> 视频评论 <span class="badge"><%= @comments.count%></span></p>
+	            </a>
+	          </h4>
+	        </div>
+	        <div id="One" class="panel-collapse collapse">
+	          <div class="panel-body">
+	          <% if @comments.count == 0 %>
+	          	<p class="h4">当前无记录！</p>
+	          <% else %>
+		          <% @comments.each do |c|%>
+		          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
+		          <p class="h5" style="font-style: italic;"><%= c.video.chapter.course.title%><<<%= c.video.chapter.title%><<<%= c.video.title%></p>
+		          <p class="h4"><strong>评论内容:</strong>  <%=c.content%></p> 
+		          </div> 
+		          <% end %>
+	         <% end %>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="panel panel-success">
+	      	<div class="panel-heading">
+		          <h4 class="panel-title">
+		            <a data-toggle="collapse" data-parent="#accordion" 
+		              href="#Two">
+		              <p class="h4"> 讨论回复 <span class="badge"><%= @replies.count%></span></p>
+		            </a>
+		          </h4>
+		</div>
+		<div id="Two" class="panel-collapse collapse">
+			<div class="panel-body">
+			<% if @replies.count==0 %>
+			<p class="h4">当前无记录！</p>
+			<% else%>
+			          <% @replies.each do |r|%>
+			          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
+				<p class="h5" style="font-style: italic;">RE:<%= r.post.title%></p>
+				<p class="h4"><strong>回复内容:</strong>  <%=r.content%></p>  
+			          </div>
+			          <% end %>
+			 <% end %>
+			</div>
+		</div>
+	      </div>
+
+	     <div class="panel panel-success">
+	      	<div class="panel-heading">
+		          <h4 class="panel-title">
+		            <a data-toggle="collapse" data-parent="#accordion" 
+		              href="#Three">
+		              <p class="h4"> 学习记录 <span class="badge"><%= @reviews.count%></span></p>
+		            </a>
+		          </h4>
+		</div>
+		<div id="Three" class="panel-collapse collapse">
+			<div class="panel-body">
+			<% if @reviews.count == 0 %>
+			<p class="h4">当前无记录！</p>
+			<% else %>
+			          <% @reviews.each do |r|%>
+			          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
+				<p class="h5" style="font-style: italic;"><%= r.coursename%></p>
+				<p class="h4"><strong>回复内容:</strong>  <%=r.trace%></p>  
+			          </div>
+			          <% end %>
+		          	<% end %>
+			</div>
+		</div>
+	      </div>
+
+	   </div>
+</div>
+
+</div>

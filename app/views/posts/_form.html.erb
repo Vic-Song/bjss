@@ -1,0 +1,39 @@
+  <div class="row" >
+  <div class="col-lg-8">
+
+  <div style="min-height: 600px">
+
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title,"主题" %><br>
+    <%= f.text_field :title,class:"form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :content,"内容" %><br>
+    <%= f.text_area :content ,class:"form-control"%>
+  </div>
+  <div class="field" style="display: none;">
+    <%= f.label :course_id %><br>
+    <%= f.text_field :course_id %>
+  </div>
+  <br/>
+  <div class="actions">
+    <%= f.submit "新建话题",class:"btn btn-primary" %>
+  </div>
+<% end %>
+
+</div>
+</div>
+</div>

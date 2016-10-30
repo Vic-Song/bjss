@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Userinfo:</strong>
+  <%= @review.userinfo %>
+</p>
+
+<p>
+  <strong>Coursename:</strong>
+  <%= @review.coursename %>
+</p>
+
+<p>
+  <strong>One:</strong>
+  <%= @review.one %>
+</p>
+
+<p>
+  <strong>Two:</strong>
+  <%= @review.two %>
+</p>
+
+<p>
+  <strong>Three:</strong>
+  <%= @review.three %>
+</p>
+
+<p>
+  <strong>Four:</strong>
+  <%= @review.four %>
+</p>
+
+<p>
+  <strong>Words:</strong>
+  <%= @review.words %>
+</p>
+
+<%= link_to 'Edit', edit_review_path(@review) %> |
+<%= link_to 'Back', reviews_path %>
