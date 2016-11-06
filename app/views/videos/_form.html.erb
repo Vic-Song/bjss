@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= f.label :video_url,"视频路径" %><br>
-    <%= f.text_field :video_url,class:"form-control" %>
+    <%= f.file_field :video_url %>
   </div>
     <div class="field">
     <%= f.label :duration,"视频时长" %><br>
@@ -37,7 +37,7 @@
   </div>
   <div class="field">
     <%= f.label :chapter_id,"章节号" %><br>
-    <%= f.text_field :chapter_id,class:"form-control" %>
+    <%= f.text_field :chapter_id,class:"form-control",value:"#{params[:chapter_id]}",disabled:true %>
   </div>
   <div class="actions">
     <%= f.submit "新建视频",class:"btn btn-primary btn-lg" %>

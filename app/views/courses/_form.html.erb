@@ -35,10 +35,12 @@
     <div class="field">
     <%= f.label :thumbnail_url,"特色图片" %><br>
     <%= f.file_field :thumbnail_url %>
+    <br/>
   </div>
       <div class="field">
     <%= f.label :trailer_url,"简介视频" %><br>
-    <%= f.text_field :trailer_url,class:"form-control" %>
+    <%= f.file_field :trailer_url %>
+    <br/>
   </div>
   <div class="actions">
     <%= f.submit "新建课程",class:"btn btn-primary btn-lg" %>

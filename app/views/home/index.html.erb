@@ -46,6 +46,7 @@
 	 <div class="row">
 	      <% @courses.each do |course| %>
 	      <% if course.id-@courses.first.id<3 %>
+	       <% cache ['home',course] do%>
 		    <div class="col-sm-6 col-md-4 col-lg-4" >
 		      <div class="thumbnail" >
 		        <%= image_tag(course.thumbnail_url)%>
@@ -59,6 +60,7 @@
 		      </div>
 		    </div>
 		   <% end%>
+	    <% end %>
 	    <% end %>
 	  </div>
 </div>

@@ -51,10 +51,16 @@
           <p class="h5"><strong>视频时长:</strong>  <%=@video.duration%></p>  
           <p class="h5"><strong>视频作者:</strong>  <%=@video.author%></p>
           <p class="h5"><strong>视频简介:</strong>  <%=@video.description%></p>
+          <% if user_signed_in?%>
+          <p class="h5" style="text-align: right"><span class="glyphicon glyphicon-download-alt" ></span> <%= link_to '下载',download_video_path,method:'get' %></p>
+          <% else %>
+          <% end %>
           </div>
         </div>
       </div>
     </div>
+  
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -62,7 +68,6 @@
         <span class="badge">
           <%= @video.comments.count%>
         </span>
-        
         </th>
 
         </tr>

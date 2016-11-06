@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :histories
+  get 'search/index'
+
   resources :records
   resources :reviews
   get 'landing/front' => 'landing#front'
@@ -21,10 +24,15 @@ Rails.application.routes.draw do
 
      namespace :api, defaults: {format: 'json'} do
       namespace :v1 do
-      resources  :reviews, :records
+      resources  :reviews, :records,:users
        end
     end
 
+    resources :videos  do
+      member do 
+        get 'download'
+      end
+    end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

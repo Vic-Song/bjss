@@ -7,7 +7,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'edcf69c1a819b8646c7b6d80f4150391cc3ce7c55ae6415d8d1e1a06b73a554cd28dd4c0c006302b749e92c2110064358bb29ab23d77cfab8e275731e407f64b'
-
+  config.secret_key = '3b0d4a742ed6c98e79363e4fb14b81c5d3ab9042d7f0f6b265f82038439809da6d7a17799443b1d1a056a83d8d49e66ad114f919fa21688472c3a7dbed0e36a7'
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -35,6 +35,7 @@ Devise.setup do |config|
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
   # config.authentication_keys = [:email]
+  config.authentication_keys = [:login]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -221,6 +222,7 @@ Devise.setup do |config|
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
   # config.scoped_views = false
+  config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).

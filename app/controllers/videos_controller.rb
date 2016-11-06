@@ -1,5 +1,20 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update, :destroy]
+  before_action :historize, only: [:show]
+  # respond_to :json :html
+
+  def historize
+    if user_signed_in?
+      Time.zone = 'Beijing'
+    @time = Time.now.in_time_zone
+    @userinfo = current_user.email
+    @video = Video.find(params[:id])
+    @history = History.new(userinfo:@userinfo,viewtime:@time,videoinfo:@video.id)
+    redirect_to home_index_path unless @history.save
+    else
+      #do nothing
+    end
+  end
 
   # GET /videos
   # GET /videos.json
@@ -13,6 +28,11 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @comments = Comment.all
     @comment = @video.comments.build()
+  end
+
+  def download
+    @video = Video.find(params[:id])
+    send_file "#{Rails.root}/public/#{@video.video_url_url}",type:"video/mp4"
   end
 
   # GET /videos/new

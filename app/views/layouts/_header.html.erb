@@ -19,7 +19,7 @@
       </ul>
 
       <!-- search form -->
-      <%= form_tag courses_path, class:"navbar-form navbar-left h4", :method => 'get' do %>
+      <%= form_tag search_index_path, target:"_blank",class:"navbar-form navbar-left h4", :method => 'get' do %>
          <%= text_field_tag :search_text, params[:search_text],class:"form-control h4",placeholder:"搜索课程" %>
          <%= submit_tag '搜索',class:"btn btn-success " %>
       <% end %>
@@ -27,19 +27,21 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
         <% if user_signed_in? %>
-          <a href="#" class="dropdown-toggle h4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %><span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <a href="#" class="dropdown-toggle h4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username %><span class="caret"></span></a>
           <%if current_user.admin?%>
+          <ul class="dropdown-menu">
           <li class="h4"><%= link_to '管理员面板', home_admin_path%></li>
           <li class="h4"><%= link_to '用户中心', home_userpanel_path%></li>
             <li class="h4"><%= link_to '退出', destroy_user_session_path, :method => :delete %></li>
+            </ul>
             <% else %>
+            <ul class="dropdown-menu">
             <li class="h4"><%= link_to '用户中心', home_userpanel_path%></li>
             <li class="h4"><%= link_to '退出', destroy_user_session_path, :method => :delete %></li>
+            </ul>
             <% end %>
-          </ul>
           <% else %>
-          <li><%= link_to '登录', new_user_session_path, class:"h4" %></li>
+          <%= link_to '登录', new_user_session_path, class:"h4" %>
           <% end %>
         </li>
       </ul>

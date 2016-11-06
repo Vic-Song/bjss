@@ -48,7 +48,9 @@
 
   
   <div class="row">
-      <% @courses.each do |course| %>
+  <% cache ['store', Course.latest] do %>
+    <% @courses.each do |course| %>
+      <% cache ['entry',course] do %>
     <div class="col-sm-6 col-md-4 col-lg-4">
       <div class="thumbnail"style="height: 100%" >
         <%= image_tag(course.thumbnail_url)%>
@@ -61,6 +63,8 @@
          </div>
       </div>
     </div>
+    <% end %>
+    <% end %>
     <% end %>
   </div>
 </div>

@@ -1,6 +1,4 @@
-<br/>
-<br/>
-<div class="container" style="min-height: 832px">
+<div class="container" style="min-height: 859px">
 <!--<table class="table table-striped">
 <thead>
 	<tr>
@@ -26,124 +24,170 @@
 	<% end %>
 </tbody>
 </table>-->
-	<div class="page-header">
-		<p class="h2">用户管理 <span class="badge"> <%= @users.count%></span> </p>
-	</div>
-	<table class="table table-striped table-hover">
-	<thead>
-		<tr>
-			<th>id</th>
-			<th>用户邮箱</th>
-			<th>管理员？</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @users.each do |u|%>
-		<tr>
-		<th><%= u.id%></th>
-		<th><%= u.email%></th>
-		<th><%= u.admin%></th>
-		</tr>
-		<% end %>
-	</tbody>
-	</table>
-	<div class="page-header">
-	<h2>课程管理 <span class="badge"><%= @courses.count%></span> &nbsp;&nbsp;&nbsp; <%= link_to '新建课程', new_course_path,class:"btn btn-default" %> </h2> 
-	
-	</div>
-	<div class="row">
-	<% @courses.each do |c| %>
-	
-	<div class="col-lg-6">
-	<div class="thumbnail">
-		<div class="row" style="margin-top: 10px">
-		
-		<div class="col-lg-6">
-		
-			<strong><%= c.title%>&nbsp;&nbsp;</strong><span class="badge"><%= c.chapters.count%></span>	
-		
-		</div> 
-		<div class="col-lg-2">
-			<%= link_to '新建章节', new_chapter_path(course_id:c.id),class:"btn btn-default btn-sm" %>
-		</div>
-		<div class="col-lg-4">
-			<%= link_to '查看', c, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_course_path(c),class:"btn btn-default btn-sm" %> <%= link_to '删除', c,class:"btn btn-danger btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
-		</div>
-		</div>
-		<% c.chapters.each do |ch| %>
-		<a data-toggle="collapse" href="#<%=ch.id%>">
-		<div class="row" style="margin: 10px 0px 10px 10px">
-		<div class="col-lg-6"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
-		<div class="col-lg-2"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %></div>
-		<div class="col-lg-4">
-			<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
-		</div>
-
-		</div>
-		</a>
-	<div id="<%=ch.id%>" class="panel-collapse collapse">
-	<div class="panel-body">
-		<div class="row">
-		<div class="col-lg-11 col-lg-offset-1">
-		<table class="table table-striped">
-			<tbody>		
-			<% ch.videos.each do |v|%>
-
-			<tr>
-			<td><%= v.title%></td>
-			<td>
-				<%= link_to '查看', v, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_video_path(v), class:"btn btn-default btn-sm"%> <%= link_to '删除', v, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
-			<% end %>	
-			</td>
-			</tr>
-
+	<br/>
+	<ul class="nav nav-tabs">
+		<li class="active h4"><a href="#coum" data-toggle="tab">课程管理</a></li>
+		<li class="h4"><a href="#um" data-toggle="tab">用户管理</a></li>
+		<li class="h4"><a href="#comm" data-toggle="tab">评论管理</a></li>	
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="coum">
+			<div class="page-header">
+				<p class="h4"> 所有课程 <span class="badge"><%= @courses.count%></span> &nbsp;&nbsp;&nbsp; <%= link_to '新建课程', new_course_path,class:"btn btn-default btn-sm" %> </p> 	
+			</div>
+			<div class="row">
+			<% @courses.each do |c| %>
 			
-			</tbody>
-		</table>
+			<div class="col-lg-6">
+			<div class="thumbnail">
+				<div class="row" style="margin-top: 10px">
+				
+				<div class="col-lg-6">
+				
+					<strong><%= c.title%>&nbsp;&nbsp;</strong><span class="badge"><%= c.chapters.count%></span>	
+				
+				</div> 
+				<div class="col-lg-2">
+					<%= link_to '新建章节', new_chapter_path(course_id:c.id),class:"btn btn-default btn-sm" %>
+				</div>
+				<div class="col-lg-4">
+					<%= link_to '查看', c, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_course_path(c),class:"btn btn-default btn-sm" %> <%= link_to '删除', c,class:"btn btn-danger btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
+				</div>
+				</div>
+				<% c.chapters.each do |ch| %>
+				<a data-toggle="collapse" href="#<%=ch.id%>">
+				<div class="row" style="margin: 10px 0px 10px 10px">
+				<div class="col-lg-6"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
+				<div class="col-lg-2"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %></div>
+				<div class="col-lg-4">
+					<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
+				</div>
+
+				</div>
+				</a>
+			<div id="<%=ch.id%>" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div class="row">
+				<div class="col-lg-11 col-lg-offset-1">
+				<table class="table table-striped">
+					<tbody>		
+					<% ch.videos.each do |v|%>
+
+					<tr>
+					<td><%= v.title%></td>
+					<td>
+						<%= link_to '查看', v, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_video_path(v), class:"btn btn-default btn-sm"%> <%= link_to '删除', v, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
+					<% end %>	
+					</td>
+					</tr>
+
+					
+					</tbody>
+				</table>
+				</div>
+				</div>
+			</div>
+			</div>
+				<% end %>
+			</div>
+			</div>
+				<% end %>
+
+			</div>	
 		</div>
+
+		<div class="tab-pane" id="um">
+			<div class="page-header">
+				<p class="h4">所有用户 <span class="badge"> <%= @users.count%></span> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">新增用户</button></p>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>用户名</th>
+						<th>用户邮箱</th>
+						<th>用户等级</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @users.each do |u|%>
+					<tr>
+					<th><%= u.username%></th>
+					<th><%= u.email%></th>
+					<th>
+					<% if u.admin == true %>
+					管理员 
+					<% elsif u.admin == false %>
+					普通用户
+					<% end %>
+					</th>
+					<th>
+					<% if u.email==current_user.email%>
+					<button class="btn btn-default disabled " >删除</button>
+					<% else %>
+					<form action="/api/v1/records/desuser" method="get">
+					<input name="userid" value="<%= u.id%>" style="display: none" ></input>
+					<input type="submit" value="删除" class="btn btn-default"/>	
+					<% end %>
+					</form>
+					</th>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="tab-pane" id="comm">
+			<div class="page-header">
+				<p class="h4">所有评论 <span class="badge"> <%= @comments.count%></span> </p>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>视频</th>
+						<th>评论内容</th>
+						<th>用户信息</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @comments.each do |co|%>
+					<tr>
+						<th><%= co.video.title%></th>
+						<th><%= co.content%></th>
+						<th><%= co.user_email%></th>
+						<th><%= link_to '删除',co,method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%></th>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	</div>
-		<% end %>
-	</div>
-	</div>
-		<% end %>
 
-	</div>
-
-	
-	<!--<% @chapters.each do |c|%>
-	<div class="panel-group" id="accordion">
-	  <div class="panel panel-primary">
-	    <div class="panel-heading">
-	      <h4 class="panel-title">
-	        <a data-toggle="collapse" data-parent="#accordion" 
-	          href="#<%=c.id%>">
-	          <p class="h4"> <%= c.title%> </p>
-	        </a>
-	      </h4>
-	    </div>
-	    <div id="<%=c.id%>" class="panel-collapse collapse">
-	      <div class="panel-body">
-	      <% c.videos.each do |v|%>
-	      <p class="h5"> <%= v.title%></p>	
-
-	      <% end %>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">用户信息</h4>
 	      </div>
+	      <div class="modal-body">
+	       <form action="/api/v1/records/show" method="get">
+	       	<label>用户名</label>
+		<input type="text" class="form-control" placeholder="Username" name="username">
+	       	<label>邮箱</label>
+		<input type="email" class="form-control" placeholder="Email" name="email">
+		<label>密码</label>
+		<input type="password" class="form-control" placeholder="Password" name="password"><br/>
+		<input type="submit" value="创建" class="btn btn-primary"/>
+	       </form>
+	      </div>
+<!-- 	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div> -->
 	    </div>
 	  </div>
 	</div>
-	<% end %>
-
-
-
-		<a data-toggle="collapse" href="#One">Click Here</a>
-
-	<div id="One" class="panel-collapse collapse">
-		<div class="panel-body">
-			<p>Hello Collapse</p>
-		</div>
-	</div>-->
-	
 
 </div>
