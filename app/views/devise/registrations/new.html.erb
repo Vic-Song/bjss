@@ -10,6 +10,10 @@
   <%= devise_error_messages! %>
 
   <div class="field">
+    <%= f.label :username,"用户名" %><br />
+    <%= f.text_field :username, class:"form-control" %>
+  </div> 
+  <div class="field">
     <%= f.label :email,"邮箱" %><br />
     <%= f.email_field :email, autofocus: true,class:"form-control" %>
   </div>
