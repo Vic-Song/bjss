@@ -16,6 +16,8 @@ gem 'cancancan'
 gem 'rolify'
 gem 'yaml_db'
 
+# for paging display
+gem 'will_paginate','~> 3.1.0'
 #for file uploading
 gem 'carrierwave'
 # Use CoffeeScript for .coffee assets and views
