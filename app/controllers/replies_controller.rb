@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
+  before_action :is_admin?,only:[:edit,:update]
 
   # GET /replies
   # GET /replies.json
@@ -28,7 +29,7 @@ class RepliesController < ApplicationController
     @reply.user_email = current_user.email
     respond_to do |format|
       if @reply.save
-        format.html { redirect_to @reply.post, notice: 'Reply was successfully created.' }
+        format.html { redirect_to @reply.post, notice: '回复创建成功！' }
         format.json { render :show, status: :created, location: @reply }
       else
         #format.html { render :new }
@@ -43,7 +44,7 @@ class RepliesController < ApplicationController
   def update
     respond_to do |format|
       if @reply.update(reply_params)
-        format.html { redirect_to @reply, notice: 'Reply was successfully updated.' }
+        format.html { redirect_to @reply, notice: '回复更新成功！' }
         format.json { render :show, status: :ok, location: @reply }
       else
         format.html { render :edit }
@@ -57,7 +58,7 @@ class RepliesController < ApplicationController
   def destroy
     @reply.destroy
     respond_to do |format|
-      format.html { redirect_to @reply.post, notice: 'Reply was successfully destroyed.' }
+      format.html { redirect_to @reply.post, notice: '回复删除成功！' }
       format.json { head :no_content }
     end
   end

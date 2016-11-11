@@ -2,13 +2,6 @@ class HomeController < ApplicationController
   before_action :is_admin?, only: [:admin]
   before_action :is_user?,only:[:userpanel]
 
- def is_admin?
-   redirect_to home_index_path, notice: 'Please sign in before proceeding' unless user_signed_in?&&current_user.admin?
- end
- def is_user?
-    redirect_to home_index_path, notice: 'Please sign in before proceeding'  unless user_signed_in?
- end
-
   def index
       @courses = Course.all
   	@chapters = Chapter.all

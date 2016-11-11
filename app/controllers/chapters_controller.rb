@@ -1,6 +1,6 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-
+  before_action :is_admin?,only:[:edit,:update,:destroy]
   # GET /chapters
   # GET /chapters.json
   def index
@@ -29,7 +29,7 @@ class ChaptersController < ApplicationController
 
     respond_to do |format|
       if @chapter.save
-        format.html { redirect_to home_admin_path, notice: 'Chapter was successfully created.' }
+        format.html { redirect_to home_admin_path, notice: '章节创建成功！' }
         format.json { render :show, status: :created, location: @chapter }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ChaptersController < ApplicationController
   def update
     respond_to do |format|
       if @chapter.update(chapter_params)
-        format.html { redirect_to home_admin_path, notice: 'Chapter was successfully updated.' }
+        format.html { redirect_to home_admin_path, notice: '章节更新成功！' }
         format.json { render :show, status: :ok, location: @chapter }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class ChaptersController < ApplicationController
   def destroy
     @chapter.destroy
     respond_to do |format|
-      format.html { redirect_to home_admin_path, notice: 'Chapter was successfully destroyed.' }
+      format.html { redirect_to home_admin_path, notice: '章节删除成功！' }
       format.json { head :no_content }
     end
   end

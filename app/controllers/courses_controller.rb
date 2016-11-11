@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :is_admin?, only:[:edit,:update,:destroy]
 
   # GET /courses
   # GET /courses.json
@@ -29,7 +30,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to home_admin_path, notice: 'Course was successfully created.' }
+        format.html { redirect_to home_admin_path, notice: '课程创建成功！' }
         format.json { render :show, status: :created, location: @course }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class CoursesController < ApplicationController
   def update
     respond_to do |format|
       if @course.update(course_params)
-        format.html { redirect_to home_admin_path, notice: 'Course was successfully updated.' }
+        format.html { redirect_to home_admin_path, notice: '课程更新成功！' }
         format.json { render :show, status: :ok, location: @course }
       else
         format.html { render :edit }
@@ -57,7 +58,7 @@ class CoursesController < ApplicationController
   def destroy
     @course.destroy
     respond_to do |format|
-      format.html { redirect_to home_admin_path, notice: 'Course was successfully destroyed.' }
+      format.html { redirect_to home_admin_path, notice: '课程删除成功！' }
       format.json { head :no_content }
     end
   end

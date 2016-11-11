@@ -26,16 +26,20 @@ module Api
                         end
 
                         def show
-                                @userinfo = "#{params[:userinfo]}"
-                                @coursename = "#{params[:coursename]}"
-                                @review = Review.find_by_userinfo(params[:userinfo]) && Review.find_by_coursename(params[:coursename])
-                                #float avg
-                                if !@review.blank?
-                                        avg = (@review.one+@review.two+@review.three+@review.four)/4
-                                        a = [@review.one,@review.two,@review.three,@review.four,avg,@review.words,@review.userinfo]
-                                        respond_with a
-                                else
-                                        respond_with "record not found!"
+                                # @userinfo = "#{params[:userinfo]}"
+                                # @coursename = "#{params[:coursename]}"
+                                # @review = Review.find_by_userinfo(params[:userinfo]) && Review.find_by_coursename(params[:coursename])
+                                # #float avg
+                                # if !@review.blank?
+                                #         avg = (@review.one+@review.two+@review.three+@review.four)/4
+                                #         a = [@review.one,@review.two,@review.three,@review.four,avg,@review.words,@review.userinfo]
+                                #         respond_with a
+                                # else
+                                #         respond_with "record not found!"
+                                # end
+                                if (params[:coursename])
+                                    @reviews = Review.where(coursename:params[:coursename])
+                                    respond_with @reviews
                                 end
                         end
                 end
