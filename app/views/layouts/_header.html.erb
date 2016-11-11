@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
         <% if user_signed_in? %>
-          <a href="#" class="dropdown-toggle h4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username %><span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username %><span class="caret"></span></a>
           <%if current_user.admin?%>
           <ul class="dropdown-menu">
           <li ><%= link_to '管理员面板', home_admin_path%></li>
