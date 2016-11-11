@@ -38,7 +38,7 @@
 			<div class="row">
 			<% @courses.each do |c| %>
 			
-			<div class="col-lg-6">
+			<div class="col-lg-6 ">
 			<div class="thumbnail">
 				<div class="row" style="margin-top: 10px">
 				
@@ -47,10 +47,9 @@
 					<strong><%= c.title%>&nbsp;&nbsp;</strong><span class="badge"><%= c.chapters.count%></span>	
 				
 				</div> 
-				<div class="col-lg-2">
+				<div class="col-lg-6 ">
 					<%= link_to '新建章节', new_chapter_path(course_id:c.id),class:"btn btn-default btn-sm" %>
-				</div>
-				<div class="col-lg-4">
+
 					<%= link_to '查看', c, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_course_path(c),class:"btn btn-default btn-sm" %> <%= link_to '删除', c,class:"btn btn-danger btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
 				</div>
 				</div>
@@ -58,8 +57,7 @@
 				<a data-toggle="collapse" href="#<%=ch.id%>">
 				<div class="row" style="margin: 10px 0px 10px 10px">
 				<div class="col-lg-6"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
-				<div class="col-lg-2"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %></div>
-				<div class="col-lg-4">
+				<div class="col-lg-6"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %>
 					<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch,:course_id => ch.course_id), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
 				</div>
 
