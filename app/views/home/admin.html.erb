@@ -60,7 +60,7 @@
 				<div class="col-lg-6"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
 				<div class="col-lg-2"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %></div>
 				<div class="col-lg-4">
-					<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
+					<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch,:course_id => ch.course_id), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
 				</div>
 
 				</div>
@@ -76,7 +76,7 @@
 					<tr>
 					<td><%= v.title%></td>
 					<td>
-						<%= link_to '查看', v, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_video_path(v), class:"btn btn-default btn-sm"%> <%= link_to '删除', v, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
+						<%= link_to '查看', v, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_video_path(v,:chapter_id => v.chapter_id), class:"btn btn-default btn-sm"%> <%= link_to '删除', v, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
 					<% end %>	
 					</td>
 					</tr>

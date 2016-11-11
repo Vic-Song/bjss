@@ -35,12 +35,12 @@
     <%= f.label :author,"视频作者" %><br>
     <%= f.text_field :author,class:"form-control" %>
   </div>
-  <div class="field">
+  <div class="field" >
     <%= f.label :chapter_id,"章节号" %><br>
-    <%= f.text_field :chapter_id,class:"form-control",value:"#{params[:chapter_id]}",disabled:true %>
+    <%= f.text_field :chapter_id,class:"form-control",value:"#{params[:chapter_id]}",readonly:true %>
   </div>
   <div class="actions">
-    <%= f.submit "新建视频",class:"btn btn-primary btn-lg" %>
+    <%= f.submit "确定",class:"btn btn-primary btn-lg" %>
   </div>
   
 <% end %>
