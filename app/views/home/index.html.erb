@@ -1,5 +1,5 @@
 <div style="background-color: #f3f3f3">
-<div class="carousel slide" id="myCarousel">
+<div class="carousel slide" id="myCarousel" data-interval="5000" >
 	<ol class="carousel-indicators">
 		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		<li data-target="#myCarousel" data-slide-to="1" ></li>
@@ -8,13 +8,25 @@
 
 	<div class="carousel-inner">
 	      <div class="item active">
-	         <a href="/courses/1"><%= image_tag("home/7.png",width:"100%")%></a> 
+	         <a href="#"><%= image_tag("home/hi1.jpg",width:"100%",height:"400")%></a> 
+	         <div class="carousel-caption">
+	         	<p class="h2">创新方法</p>
+	         	<p class="h4">掌握创新原理，实践创新方法</p>
+	         </div>
 	      </div>
 	      <div class="item">
-	         <a href="/courses/2"><%= image_tag("home/4.png",width:"100%")%></a>
+	         <a href="#"><%= image_tag("home/hi2.jpg",width:"100%",height:"400")%></a>
+	         <div class="carousel-caption">
+	         	<p class="h2">创新方法</p>
+	         	<p class="h4">掌握创新原理，实践创新方法</p>
+	         </div>
 	      </div>
 	      <div class="item">
-	         <a href="/courses/3"><%= image_tag("home/5.png",width:"100%")%></a>
+	         <a href="#"><%= image_tag("home/hi3.jpg",width:"100%",height:"400")%></a>
+	         <div class="carousel-caption">
+	         	<p class="h2">创新方法</p>
+	         	<p class="h4">掌握创新原理，实践创新方法</p>
+	         </div>
 	      </div>
 	  </div>
 	   
@@ -50,9 +62,9 @@
 		    <div class="col-sm-6 col-md-4 col-lg-4" >
 		      <div class="thumbnail" >
 		        <%= image_tag(course.thumbnail_url)%>
-		        <div class="caption" style="height: 160px">
+		        <div class="caption" style="height: 130px">
 		          <h3><%= course.title %></h3>
-		          <p><%= course.description %></p>
+		          <p><%= course.description.truncate(30) %></p>
 		        </div>
 		        <div class="caption">
 		         <div align="right"><%= link_to '查看', course,class:"btn btn-default" %> </div>
