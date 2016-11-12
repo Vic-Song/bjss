@@ -121,13 +121,14 @@
 					</th>
 					<th>
 					<% if u.email==current_user.email%>
-					<button class="btn btn-default disabled " >删除</button>
+					<button class="btn btn-default btn-sm disabled " >删除</button>
 					<% else %>
-					<form action="/api/v1/records/desuser" method="get">
+ 					<!-- <form action="/api/v1/records/show" method="get">
 					<input name="userid" value="<%= u.id%>" style="display: none" ></input>
-					<input type="submit" value="删除" class="btn btn-default"/>	
+					<input type="submit" value="删除" class="btn btn-default"/>	  
+					</form>-->
+					<%= button_to '删除','/api/v1/records/show',params:{userid:u.id},method: :get,class:"btn btn-danger btn-sm",data: { confirm: "Are you sure?" } %>
 					<% end %>
-					</form>
 					</th>
 					</tr>
 					<% end %>
