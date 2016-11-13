@@ -42,7 +42,7 @@ module Api
                                 else
                                     # format.html{}
                                     # format.json {"error"}
-                                    respond_with "error"
+                                    redirect_to home_admin_path, alert:'用户创建失败！'
                                 end
                             elsif (params[:userid])
                                 @deluser = User.find(params[:userid])
