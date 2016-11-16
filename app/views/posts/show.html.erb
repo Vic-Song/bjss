@@ -50,7 +50,7 @@
         <div class="panel panel-default">
         	        <div class="panel-heading">
 	        	<p class="h5" style="text-align: right;"><span class="glyphicon glyphicon-user"></span> <%= @post.user_email%>
-	        	<span class="glyphicon glyphicon-time"></span> <%= time_tag @post.created_at%>
+	        	<span class="glyphicon glyphicon-time"></span> <%= @post.created_at.strftime('%Y.%m.%d %H:%M') %>
 		<% if user_signed_in?%>
 		<% if @post.user_email==current_user.email %>  &nbsp;&nbsp;&nbsp;  
 		<%= link_to '刪除', @post, method: :delete, data: { confirm: '确定删除？' }%>  
@@ -61,9 +61,33 @@
 	        <div class="panel-body">
 	        <p class="h2 text-center"><%= @post.title%></p> 
 	        <p class="h4" style="line-height: 35px"><%= @post.content%></p> 
+	        <% if user_signed_in? %>
+	        <p class="h4 text-right" style="color: black"> <a  data-toggle="collapse" href="#reply"> <span class="glyphicon glyphicon-pencil"></span></a></p>
+	        <% end %>
 	        </div>
 
         </div>
+
+	<div class="panel-collapse collapse" id="reply">
+		<%= form_for(@reply) do |f| %>
+		  <div class="field">    
+		    <%= f.text_field :content, class:"form-control" %>
+		  </div>
+		  <div class="field" style="display: none">
+		    <%= f.label :post_id %><br>
+		    <%= f.text_field :post_id %>
+		  </div>
+		  <div class="actions">
+		  <br/>
+		    <%= f.submit '评论',class:"btn btn-success"%>
+		  </div>
+		<% end %>
+	</div>
+		<%if !user_signed_in?%>
+		<p class="h4 text-center"> <font color="red"> 请<%= link_to '登录', new_user_session_path %>后评论</font></p>
+		<% end %>
+	
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -83,14 +107,59 @@
 			 <tr>
 			<td>
 				<div class="media-body">
-					<p class="h5"><%= reply.user_email%> <small><%= time_tag reply.updated_at %></small>
+					<p class="h5"><%= reply.user_email%> <small><%= reply.updated_at.strftime('%Y.%m.%d %H:%M') %></small>
 					<% if user_signed_in?%>
 					<% if reply.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 					<%= link_to '刪除', reply, method: :delete, data: { confirm: '确定删除？' }%>  
 					<% end %>
+					<!-- <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">回复</button> -->
+<!-- 					<% reid = 0-reply.post_id%>
+					<%= link_to '回复',new_reply_path(post_id:reid)%> -->
+					<a data-toggle="collapse" href="#<%= reply.id%>">回复</a>
 					<% end %>
 					</p> 
+					<% if reply.parent_id==0%>
 					<h4><%= reply.content%></h4>
+					<% else %>
+					<h4><%= reply.content%></h4>
+					<% rrr = reply %>
+					<% i = 0%>
+
+					<% @replies.each do |r|%>
+					<% if r.id==rrr.parent_id %>
+					<% rrr = r %>
+					<% i = i+1 %>
+					<% css = 'margin-left:'+(5+5*i).to_s+'px'%>
+					<div class="" style="<%= css %>">
+					<blockquote>
+					<p class="h6"><%= rrr.user_email %></p>
+					<p class="h5"><%= rrr.content%></p>
+					</blockquote>
+					</div>
+					<% end  %>
+					<% end until rrr.parent_id==0 %>
+
+					<% end %>
+
+					<div class="panel-collapse collapse" id="<%= reply.id%>">
+					<%= form_for(@rereply) do |f| %>
+					  <div class="field">    
+					    <%= f.text_field :content, class:"form-control" %>
+					  </div>
+					  <div class="field" style="display: none">
+					    <%= f.label :post_id %><br>
+					    <%= f.text_field :post_id,value:"#{reply.post.id}" %>
+					  </div>
+					  <div class="field" style="display: none">
+					    <%= f.label :parent_id %><br>
+					    <%= f.text_field :parent_id,value:"#{reply.id}" %>
+					  </div>
+					  <div class="actions">
+					  <br/>
+					    <%= f.submit '回复',class:"btn btn-success"%>
+					  </div>
+					<% end %>
+					</div>
 				</div>
 			</td>
 			</tr>
@@ -99,29 +168,15 @@
 			
 		</tbody>
 	</table>
+	<%= will_paginate @replies%>
 
-	<% if user_signed_in? %>
-	<%= form_for(@reply) do |f| %>
-	  <div class="field">    
-	    <%= f.text_field :content, class:"form-control" %>
-	  </div>
-	  <div class="field" style="display: none">
-	    <%= f.label :post_id %><br>
-	    <%= f.text_field :post_id %>
-	  </div>
-	  <div class="actions">
-	  <br/>
-	    <%= f.submit '评论',class:"btn btn-success"%>
-	  </div>
-	<% end %>
-	<% else %>
-	<p class="h4 text-center"> <font color="red"> 请<%= link_to '登录', new_user_session_path %>后评论</font></p>
-	
-	<% end %>
+
 
 
         </div>
 
       </div>
     </div>
+
+
   </div>

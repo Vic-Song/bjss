@@ -33,7 +33,7 @@
   </div>
   <div class="col-lg-8 ">
     <h3><%= @video.title%> </h3>
-    <%= video_tag(@video.video_url, width:"100%", controls:true, preload:"none",poster:"1.jpg") %>
+    <%= video_tag(@video.video_url_url, width:"100%", controls:true, preload:"none",poster:"1.jpg") %>
     <br/><br/>
 
     <div class="panel-group" id="accordion">
@@ -61,42 +61,18 @@
     </div>
   
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-        <th>评论 
+   
+      <div class="">
+        <p> 评论 
         <span class="badge">
           <%= @video.comments.count%>
         </span>
-        </th>
+          <% if user_signed_in? %>
+          <a  data-toggle="collapse" href="#comment"> <span class="glyphicon glyphicon-pencil"></span></a>
+          <% end %>
+          </p>
 
-        </tr>
-      </thead>
-      <tbody>
-        
-        <% @comments.each do |comment| %>
-         <%if comment.video_id==@video.id%>
-         <tr>
-        <td>
-          <div class="media-body">
-            <p><h5><%= comment.user_email%> <small><%= time_tag comment.updated_at %></small>
-            <% if user_signed_in?%>
-            <% if comment.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-            <%= link_to '刪除', comment, method: :delete, data: { confirm: 'Are you sure?' }%>  
-            <% end %>
-            <% end %>
-            </h5>  </p> 
-            <h4><%= comment.content%></h4>
-          </div>
-        </td>
-        </tr>
-        <% end %>
-        <% end %>
-        
-      </tbody>
-    </table>
-
-      <% if user_signed_in? %>
+      <div class="panel-collapse collapse" id="comment">
       <%= form_for(@comment) do |f| %>
         <div class="field">    
           <%= f.text_field :content, class:"form-control" %>
@@ -110,10 +86,87 @@
           <%= f.submit '评论',class:"btn btn-success"%>
         </div>
       <% end %>
-      <% else %>
+      </div>
+      <% if !user_signed_in? %>
       <p class="h4 text-center"> <font color="red"> 请<%= link_to '登录', new_user_session_path %>后评论</font></p>
-      
       <% end %>
+
+      </div>
+
+
+     <table class="table table-striped">
+      <tbody>
+        
+        <% @comments.each do |comment| %>
+         <%if comment.video_id==@video.id%>
+         <tr>
+        <td>
+          <div class="media-body">
+            <p><h5><%= comment.user_email%> <small><%= comment.updated_at.strftime('%Y.%m.%d %H:%M') %></small>
+            <% if user_signed_in?%>
+            <% if comment.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+            <%= link_to '刪除', comment, method: :delete, data: { confirm: 'Are you sure?' }%>  
+            <% end %>
+            <a data-toggle="collapse" href="#<%= comment.id%>">回复</a>
+            <% end %>
+            </h5>  </p> 
+            
+            <% if comment.parent_id==0%>
+            <h4><%= comment.content%></h4>
+            <% else %>
+            <h4><%= comment.content%></h4>
+            <% rrr = comment %>
+            <% i = 0%>
+
+            <% @comments.each do |r|%>
+            <% if r.id==rrr.parent_id %>
+            <% rrr = r %>
+            <% i = i+1 %>
+            <% css = 'margin-left:'+(5+5*i).to_s+'px'%>
+            <div class="" style="<%= css %>">
+            <blockquote>
+            <p class="h6"><%= rrr.user_email %></p>
+            <p class="h5"><%= rrr.content%></p>
+            </blockquote>
+            </div>
+            <% end  %>
+            <% end until rrr.parent_id==0 %>
+
+            <% end %>
+
+            <div class="panel-collapse collapse" id="<%= comment.id%>">
+            <%= form_for(@recomment) do |f| %>
+              <div class="field">    
+                <%= f.text_field :content, class:"form-control" %>
+              </div>
+              <div class="field" style="display: none">
+                <%= f.label :video_id %><br>
+                <%= f.text_field :video_id,value:"#{comment.video.id}" %>
+              </div>
+              <div class="field" style="display: none">
+                <%= f.label :parent_id %><br>
+                <%= f.text_field :parent_id,value:"#{comment.id}" %>
+              </div>
+              <div class="actions">
+              <br/>
+                <%= f.submit '回复',class:"btn btn-success"%>
+              </div>
+            <% end %>
+            </div>
+
+          </div>
+        </td>
+        </tr>
+        <% end %>
+        <% end %>
+        
+      </tbody>
+      
+    </table>
+   <%= will_paginate @comments%>
+ 
+
+      
 
   </div>
   </div>

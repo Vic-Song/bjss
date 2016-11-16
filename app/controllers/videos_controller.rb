@@ -29,6 +29,7 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @comments = Comment.all.paginate(:page => params[:page],:per_page => 10)
     @comment = @video.comments.build()
+    @recomment = Comment.new
   end
 
   def download

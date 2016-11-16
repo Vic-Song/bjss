@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161106073321) do
+ActiveRecord::Schema.define(version: 20161116074405) do
 
   create_table "chapters", force: :cascade do |t|
     t.string   "title",       limit: 255
@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(version: 20161106073321) do
   create_table "comments", force: :cascade do |t|
     t.text     "content",    limit: 65535
     t.integer  "video_id",   limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "user_email", limit: 255
+    t.integer  "parent_id",  limit: 4,     default: 0
   end
 
   add_index "comments", ["video_id"], name: "index_comments_on_video_id", using: :btree
@@ -74,9 +75,10 @@ ActiveRecord::Schema.define(version: 20161106073321) do
   create_table "replies", force: :cascade do |t|
     t.text     "content",    limit: 65535
     t.integer  "post_id",    limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "user_email", limit: 255
+    t.integer  "parent_id",  limit: 4,     default: 0
   end
 
   add_index "replies", ["post_id"], name: "index_replies_on_post_id", using: :btree

@@ -19,6 +19,8 @@ class PostsController < ApplicationController
     @posts = @postss.order(updated_at: :DESC)
     @replies=Reply.all.paginate(:page => params[:page],:per_page => 10)
     @reply = @post.replies.build()
+    @rereply = Reply.new
+    # @rereplyfs = Reply.all.where("parent_id>0")
   end
 
   # GET /posts/new
