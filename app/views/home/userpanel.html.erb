@@ -31,10 +31,12 @@
 			  	<p class="h4">当前无记录！</p>
 			  <% else %>
 			      <% @comments.each do |c|%>
-			      <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
-			      <p class="h5" style="font-style: italic;"><%= c.video.chapter.course.title%><<<%= c.video.chapter.title%><<<%= c.video.title%></p>
-			      <p class="h5"><strong>评论内容:</strong>  <%=c.content%></p> 
-			      </div> 
+			      <ul>
+			      <li>
+			      <p class="h5" style="font-style: italic;"><%= c.video.chapter.course.title%> | <%= c.video.chapter.title%> | <%= c.video.title%></p>
+			      <p class="h4"> <strong>评论内容:</strong>  <%=c.content%></p>
+			      </li> 
+			      </ul> 
 			      <% end %>
 			 <% end %>
 			  </div>
@@ -56,10 +58,10 @@
 			<p class="h4">当前无记录！</p>
 			<% else%>
 			          <% @replies.each do |r|%>
-			          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
+			          <ul><li>
 				<p class="h5" style="font-style: italic;">RE:<%= r.post.title%></p>
-				<p class="h5"><strong>回复内容:</strong>  <%=r.content%></p>  
-			          </div>
+				<p class="h4"><strong>回复内容:</strong>  <%=r.content%></p>  
+			          </li></ul>
 			          <% end %>
 			 <% end %>
 			</div>
@@ -81,10 +83,10 @@
 			<p class="h4">当前无记录！</p>
 			<% else %>
 			          <% @records.each do |r|%>
-			          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
+			          <ul><li>
 				<p class="h5" style="font-style: italic;"><%= r.coursename%></p>
-				<p class="h5"><strong>学习记录:</strong>  <%=r.trace%></p>  
-			          </div>
+				<p class="h4"><strong>学习记录:</strong>  <%=r.trace%></p>  
+			          </li></ul>
 			          <% end %>
 			      	<% end %>
 			</div>
@@ -107,7 +109,6 @@
 			<% elsif @hfday == @hlday %>
 					<blockquote> <%= @historyf.viewtime.strftime('%Y.%m.%d')%></blockquote>
 					<% @histories.each do |h|%>
-					<% if !Video.where(id:h.videoinfo).blank?%>
 					<% video = Video.find(h.videoinfo) %>
 					<ul >
 					<li >
@@ -115,14 +116,12 @@
 					<p class="h5"><strong>学习时间:</strong>  <%=h.viewtime.strftime('%Y.%m.%d %H:%M') %></p> 
 					</li>
 					</ul>
-					<% end %> 
 					<% end %>
 			<% else %>
 				<% for i in @days.uniq!.reverse %>
 					<blockquote><%= (@time-(86400*i)).strftime('%Y.%m.%d') %></blockquote>
 
 					<% @histories.each do |h|%>
-					<% if !Video.where(id:h.videoinfo).blank? %>
 					<% if ((@time-h.viewtime)/86400).ceil == i %>
 					<% v = Video.find(h.videoinfo) %>
 					<ul >
@@ -132,7 +131,6 @@
 					<p class="h5"><strong>学习时间:</strong>  <%= h.viewtime.strftime('%Y.%m.%d %H:%M') %></p>
 					</li>
 					</ul>
-					<% end %>
 					<% end %>
 					<% end %>
 
