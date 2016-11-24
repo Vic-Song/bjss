@@ -104,15 +104,41 @@
 			<div class="panel-body">
 			<% if @histories.count == 0 %>
 			<p class="h4">当前无记录！</p>
+			<% elsif @hfday == @hlday %>
+					<blockquote> <%= @historyf.viewtime.strftime('%Y.%m.%d')%></blockquote>
+					<% @histories.each do |h|%>
+					<% if !Video.where(id:h.videoinfo).blank?%>
+					<% video = Video.find(h.videoinfo) %>
+					<ul >
+					<li >
+					<p class="h5" style="font-style: italic;"><strong>视频名称:</strong> <%= video.chapter.course.title%> | <%= video.chapter.title%> | <%= video.title%> <%= link_to '刪除', h, method: :delete, data: { confirm: '确定删除？' }%></p>
+					<p class="h5"><strong>学习时间:</strong>  <%=h.viewtime.strftime('%Y.%m.%d %H:%M') %></p> 
+					</li>
+					</ul>
+					<% end %> 
+					<% end %>
 			<% else %>
-			          <% @histories.each do |h|%>
-			          <% video = Video.find(h.videoinfo)%>
-			          <div style="background-color: #eeeeee;padding: 2px;margin:2px ">
-				<p class="h5" style="font-style: italic;"><strong>视频名称:</strong> <%= video.chapter.course.title%><<<%= video.chapter.title%><<<%= video.title%></p>
-				<p class="h5"><strong>学习时间:</strong>  <%=h.viewtime%></p>  
-			          </div>
-			          <% end %>
-			      	<% end %>
+				<% for i in @days.uniq!.reverse %>
+					<blockquote><%= (@time-(86400*i)).strftime('%Y.%m.%d') %></blockquote>
+
+					<% @histories.each do |h|%>
+					<% if !Video.where(id:h.videoinfo).blank? %>
+					<% if ((@time-h.viewtime)/86400).ceil == i %>
+					<% v = Video.find(h.videoinfo) %>
+					<ul >
+					<li >
+					<p class="h5" style="font-style: italic;"><strong>视频名称:</strong> <%= v.chapter.course.title%> | <%= v.chapter.title%> | <%= v.title%>    
+					<%= link_to '刪除', h, method: :delete, data: { confirm: '确定删除？' }%></p>
+					<p class="h5"><strong>学习时间:</strong>  <%= h.viewtime.strftime('%Y.%m.%d %H:%M') %></p>
+					</li>
+					</ul>
+					<% end %>
+					<% end %>
+					<% end %>
+
+				<% end %>
+
+			<% end %>
 			</div>
 			</div>
 			</div>

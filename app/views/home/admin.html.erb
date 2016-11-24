@@ -35,29 +35,27 @@
 			<div class="page-header">
 				<p class="h4"> 所有课程 <span class="badge"><%= @courses.count%></span> &nbsp;&nbsp;&nbsp; <%= link_to '新建课程', new_course_path,class:"btn btn-default btn-sm" %> </p> 	
 			</div>
-			<div class="row">
 			<% @courses.each do |c| %>
-			
-			<div class="col-lg-6 ">
-			<div class="thumbnail">
-				<div class="row" style="margin-top: 10px">
-				
-				<div class="col-lg-6">
+			<div class="panel panel-info">
+				<div class="panel-heading" >
+				<div class="row">
+				<div class="col-lg-8">
 				
 					<strong><%= c.title%>&nbsp;&nbsp;</strong><span class="badge"><%= c.chapters.count%></span>	
 				
 				</div> 
-				<div class="col-lg-6 ">
+				<div class="col-lg-4 ">
 					<%= link_to '新建章节', new_chapter_path(course_id:c.id),class:"btn btn-default btn-sm" %>
 
 					<%= link_to '查看', c, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_course_path(c),class:"btn btn-default btn-sm" %> <%= link_to '删除', c,class:"btn btn-danger btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
 				</div>
 				</div>
+				</div>
 				<% c.chapters.each do |ch| %>
 				<a data-toggle="collapse" href="#<%=ch.id%>">
 				<div class="row" style="margin: 10px 0px 10px 10px">
-				<div class="col-lg-6"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
-				<div class="col-lg-6"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %>
+				<div class="col-lg-8"><%= ch.title%>&nbsp;&nbsp;<span class="badge"><%= ch.videos.count%></span> </div>
+				<div class="col-lg-4"><%= link_to '新建视频', new_video_path(chapter_id:ch.id),class:"btn btn-default btn-sm" %>
 					<%= link_to '查看', ch, class:"btn btn-default btn-sm" %> <%= link_to '编辑', edit_chapter_path(ch,:course_id => ch.course_id), class:"btn btn-default btn-sm"%> <%= link_to '删除', ch, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm" %>
 				</div>
 
@@ -66,7 +64,7 @@
 			<div id="<%=ch.id%>" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div class="row">
-				<div class="col-lg-11 col-lg-offset-1">
+				<div class="col-lg-9 col-lg-offset-1">
 				<table class="table table-striped">
 					<tbody>		
 					<% ch.videos.each do |v|%>
@@ -88,10 +86,7 @@
 			</div>
 				<% end %>
 			</div>
-			</div>
 				<% end %>
-
-			</div>	
 		</div>
 
 		<div class="tab-pane" id="um">
@@ -121,13 +116,11 @@
 					</th>
 					<th>
 					<% if u.email==current_user.email%>
-					<button class="btn btn-default btn-sm disabled " >删除</button>
+					<button class="btn btn-default btn-sm disabled " >删除</button> <button class="btn btn-default btn-sm disabled " >重置密码</button>
 					<% else %>
- 					<!-- <form action="/api/v1/records/show" method="get">
-					<input name="userid" value="<%= u.id%>" style="display: none" ></input>
-					<input type="submit" value="删除" class="btn btn-default"/>	  
-					</form>-->
-					<%= button_to '删除','/api/v1/records/show',params:{userid:u.id},method: :get,class:"btn btn-danger btn-sm",data: { confirm: "Are you sure?" } %>
+					<!--<%= button_to '删除','/api/v1/records/show',params:{userid:u.id,func:'del'},method: :get,class:"btn btn-danger btn-sm",data: { confirm: "Are you sure?" } %>-->
+					<%= link_to '删除',api_v1_records_show_path(userid:u.id,func:'del'),class:"btn btn-danger btn-sm",data: { confirm: "确定删除用户？" } %>
+					<%= link_to '重置密码',api_v1_records_show_path(userid:u.id,func:'reset'),class:"btn btn-primary btn-sm",data: { confirm: "确定重置密码为123456？" } %>
 					<% end %>
 					</th>
 					</tr>

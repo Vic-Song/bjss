@@ -44,10 +44,15 @@ module Api
                                     # format.json {"error"}
                                     redirect_to home_admin_path, alert:'用户创建失败！'
                                 end
-                            elsif (params[:userid])
+                            elsif (params[:userid]&&params[:func])
                                 @deluser = User.find(params[:userid])
-                                @deluser.destroy
-                                redirect_to   home_admin_path, alert:'用户删除成功！'
+                                if params[:func] == 'del'
+                                    @deluser.destroy
+                                    redirect_to   home_admin_path, alert:'用户删除成功！'
+                                elsif params[:func] == 'reset'
+                                    @deluser.update_attributes(password:'123456')
+                                    redirect_to   home_admin_path, alert:'重置密码成功！'
+                                end
                             end
                         end
                 end

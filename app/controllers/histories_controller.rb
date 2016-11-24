@@ -56,7 +56,7 @@ class HistoriesController < ApplicationController
   def destroy
     @history.destroy
     respond_to do |format|
-      format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }
+      format.html { redirect_to home_userpanel_path, notice: '观看记录删除成功！' }
       format.json { head :no_content }
     end
   end

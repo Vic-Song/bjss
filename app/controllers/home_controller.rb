@@ -25,6 +25,26 @@ class HomeController < ApplicationController
     @replies = Reply.where(user_email:current_user.email)
     @records = Record.where(userinfo:current_user.email)
     @histories = History.where(userinfo:current_user.email)
+    @historyf = @histories.first
+    @historyl = @histories.last
+    @time = Time.now.midnight
+    # @histories.each do |h|
+    #   if Video.find(id:h.videoinfo).blank?
+    #     h.destroy
+    #   else
+    #   return h
+    # end
+    # end
+
+    @days = Array.new
+    i = 0
+    @histories.each do |h|
+      @days[i] = ((@time - h.viewtime)/86400).ceil
+      i = i+1
+    end
+
+    @hfday = ((@time - @historyf.viewtime)/86400).ceil
+    @hlday = ((@time - @historyl.viewtime)/86400).ceil
   end
 
 end
