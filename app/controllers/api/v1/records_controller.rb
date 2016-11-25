@@ -52,6 +52,13 @@ module Api
                                 elsif params[:func] == 'reset'
                                     @deluser.update_attributes(password:'123456')
                                     redirect_to   home_admin_path, alert:'重置密码成功！'
+                                elsif params[:func] == 'newpwd'
+                                    @deluser.update_attributes(password:params[:password])
+                                    if @deluser.save
+                                        redirect_to   new_user_session_path, alert:'密码修改成功，请重新登陆！'
+                                    else
+                                        redirect_to   home_userpanel_path, alert:'密码修改失败！'
+                                    end
                                 end
                             end
                         end

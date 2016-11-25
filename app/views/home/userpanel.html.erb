@@ -1,6 +1,6 @@
 <div class="container" style="min-height: 859px">
 	<div class="page-header">
-		<p class="h2"><%=current_user.email%>的用户中心</p>
+		<p class="h2"><%=current_user.email%>的用户中心 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#newpwd">修改密码</button></p>
 	</div>
 
 	<div class="row">
@@ -118,7 +118,7 @@
 					</ul>
 					<% end %>
 			<% else %>
-				<% for i in @days.uniq!.reverse %>
+				<% for i in @days.uniq.reverse %>
 					<blockquote><%= (@time-(86400*i)).strftime('%Y.%m.%d') %></blockquote>
 
 					<% @histories.each do |h|%>
@@ -142,6 +142,26 @@
 			</div>
 
 		   </div>
+	</div>
+
+	<div class="modal fade" id="newpwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+	      </div>
+	      <div class="modal-body">
+	       <form action="/api/v1/records/show" method="get">
+		<label>新密码</label>
+		<input type="password" class="form-control" placeholder="Password" name="password" autocomplete="off"><br/>
+		<input type="text" class="form-control" placeholder="Password" name="userid" value="<%= current_user.id%>" style="display: none;"><br/>
+		<input type="text" class="form-control" placeholder="Password" name="func" value="newpwd" style="display: none;"><br/>
+		<input type="submit" value="确定" class="btn btn-primary"/>
+	       </form>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 </div>
