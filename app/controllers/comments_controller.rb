@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    @comment.destroy
+    @comment.update_attributes(content:'该评论已删除！',user_email:'-')
     respond_to do |format|
       format.html { redirect_to @comment.video, notice: '评论删除成功！' }
       format.json { head :no_content }

@@ -56,7 +56,7 @@ class RepliesController < ApplicationController
   # DELETE /replies/1
   # DELETE /replies/1.json
   def destroy
-    @reply.destroy
+    @reply.update_attributes(content:'该回复已删除！',user_email:'-')
     respond_to do |format|
       format.html { redirect_to @reply.post, notice: '回复删除成功！' }
       format.json { head :no_content }

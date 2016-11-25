@@ -107,7 +107,9 @@
             <% if comment.user_email==current_user.email %>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
             <%= link_to '刪除', comment, method: :delete, data: { confirm: 'Are you sure?' }%>  
             <% end %>
+            <% if comment.user_email != '-' %>
             <a data-toggle="collapse" href="#<%= comment.id%>">回复</a>
+            <% end %>
             <% end %>
             </h5>  </p> 
             
@@ -130,7 +132,8 @@
             </blockquote>
             </div>
             <% end  %>
-            <% end until rrr.parent_id==0 %>
+            <% end until Comment.where(id:rrr.parent_id).blank? %>
+
 
             <% end %>
 

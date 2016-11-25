@@ -146,12 +146,14 @@
 				</thead>
 				<tbody>
 					<% @comments.each do |co|%>
+					<% if co.user_email != '-' %>
 					<tr>
 						<td><%= co.video.title%></td>
 						<td><%= co.content%></td>
 						<td><%= co.user_email%></td>
 						<td><%= link_to '删除',co,method: :delete, data: { confirm: '确定删除该评论?' } ,class:"btn btn-danger btn-sm"%></td>
 					</tr>
+					<% end %>
 					<% end %>
 				</tbody>
 			</table>
@@ -172,12 +174,14 @@
 				</thead>
 				<tbody>
 					<% @replies.each do |r| %>
+					<% if r.user_email != '-' %>
 					<tr>
 						<td><%= r.post.title %></td>
 						<td><%= r.content %></td>
 						<td><%= r.user_email %></td>
 						<td><%= link_to '删除',r,method: :delete, data: { confirm: '确定删除该回复?' } ,class:"btn btn-danger btn-sm"%></td>
 					</tr>
+					<% end %>
 					<% end %>
 				</tbody>
 			</table>
