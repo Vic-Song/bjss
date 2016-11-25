@@ -28,7 +28,9 @@
 	<ul class="nav nav-tabs">
 		<li class="active h4"><a href="#coum" data-toggle="tab">课程管理</a></li>
 		<li class="h4"><a href="#um" data-toggle="tab">用户管理</a></li>
-		<li class="h4"><a href="#comm" data-toggle="tab">评论管理</a></li>	
+		<li class="h4"><a href="#comm" data-toggle="tab">评论管理</a></li>
+		<li class="h4"><a href="#repm" data-toggle="tab">讨论管理</a> </li>
+		<li class="h4"><a href="#stats" data-toggle="tab">数据统计</a> </li>	
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="coum">
@@ -145,15 +147,79 @@
 				<tbody>
 					<% @comments.each do |co|%>
 					<tr>
-						<th><%= co.video.title%></th>
-						<th><%= co.content%></th>
-						<th><%= co.user_email%></th>
-						<th><%= link_to '删除',co,method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%></th>
+						<td><%= co.video.title%></td>
+						<td><%= co.content%></td>
+						<td><%= co.user_email%></td>
+						<td><%= link_to '删除',co,method: :delete, data: { confirm: '确定删除该评论?' } ,class:"btn btn-danger btn-sm"%></td>
 					</tr>
 					<% end %>
 				</tbody>
 			</table>
 		</div>
+
+		<div class="tab-pane" id="repm">
+			<div class="page-header">
+				<p class="h4">所有讨论</p>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>主题</th>
+						<th>回复内容</th>
+						<th>用户信息</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @replies.each do |r| %>
+					<tr>
+						<td><%= r.post.title %></td>
+						<td><%= r.content %></td>
+						<td><%= r.user_email %></td>
+						<td><%= link_to '删除',r,method: :delete, data: { confirm: '确定删除该回复?' } ,class:"btn btn-danger btn-sm"%></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="tab-pane" id="stats">
+			<div class="page-header">
+				<p class="h4">学习数据统计</p>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>课程名</th>
+						<th>学习次数</th>
+						<th>学习人数</th>
+						<th>评论数</th>
+					</tr>
+				</thead>
+				<tbody>
+				<% @courses.each do |c|%>
+				<tr>
+					<td><%= c.title %></td>
+					<!--<% sum = 0 %>-->
+					<% i = 0 %>
+					<% hs = Array.new %>
+					<% c.videos.each do |v|%>
+						<% histories = History.where(videoinfo:v.id)%>
+						<!--<% sum = sum+histories.length %>-->
+						<% histories.each do |h|%>
+						<% hs[i] = h.userinfo %>
+						<% i = i+1 %>
+						<% end %>
+					<% end %>
+					<td><%= hs.length %></td>
+					<td><%= hs.uniq.length %></td>
+					<td><%= c.comments.count%></td>
+				</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</div>
+
 	</div>
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

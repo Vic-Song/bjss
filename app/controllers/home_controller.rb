@@ -15,6 +15,7 @@ class HomeController < ApplicationController
       @users = User.all
       @user = User.new(email:params[:email],password:params[:password])
       @comments = Comment.order(:video_id)
+      @replies = Reply.order(:post_id)
   end
 
   def about
