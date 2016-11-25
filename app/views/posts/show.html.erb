@@ -115,7 +115,9 @@
 					<!-- <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">回复</button> -->
 <!-- 					<% reid = 0-reply.post_id%>
 					<%= link_to '回复',new_reply_path(post_id:reid)%> -->
+					<% if reply.user_email != '-' %>
 					<a data-toggle="collapse" href="#<%= reply.id%>">回复</a>
+					<% end %>
 					<% end %>
 					</p> 
 					<% if reply.parent_id==0%>
@@ -130,14 +132,15 @@
 					<% rrr = r %>
 					<% i = i+1 %>
 					<% css = 'margin-left:'+(5+5*i).to_s+'px'%>
-					<div class="" style="<%= css %>">
+					<div class="" style="<%= 
+					css %>">
 					<blockquote>
 					<p class="h6"><%= rrr.user_email %></p>
 					<p class="h5"><%= rrr.content%></p>
 					</blockquote>
 					</div>
 					<% end  %>
-					<% end until rrr.parent_id==0 %>
+					<% end until Reply.where(id:rrr.parent_id).blank? %>
 
 					<% end %>
 
