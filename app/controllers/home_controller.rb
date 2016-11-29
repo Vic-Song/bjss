@@ -57,4 +57,15 @@ class HomeController < ApplicationController
     @hlday = ((@time - @historyl.viewtime)/86400).ceil
   end
 
+   #handling application routing error
+  rescue_from ActionController::RoutingError, :with => :render_not_found
+ 
+ def routing_error
+  raise ActionController::RoutingError.new(params[:path])
+ end
+
+ def render_not_found
+  redirect_to home_index_path, alert:'非法路径，已跳转至首页！'
+ end
+
 end
