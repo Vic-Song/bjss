@@ -28,15 +28,15 @@
 - 6.启动服务器，默认 WEBrick 命令 `rails s`，或使用 passenger （Gemfile 文件已添加）`bundle exec passenger start`，顺利启动，则表示本地运行OK
 - 7.接下来是服务器设置，使用 Nginx 作为网络服务器，具体步骤：
   - `yum install nginx`，参考[这里](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-centos-6-with-yum)
-  - 配置 Nginx 服务器，使用**反向代理（Reverse Proxy）**方式处理用户 http 请求。
+  - 配置 Nginx 服务器，使用**反向代理 (Reverse Proxy)**方式处理用户 http 请求。
     - 修改 Nginx 配置，文件路径 `/etc/nginx/conf.d/default.conf`，修改 server 部分代码如下（参考[这里](https://www.linuxhelp.com/how-to-configure-nginx-as-a-reverse-proxy-in-centos/)）  
-    `server{  
+    ```server{  
         listen 80;  
         server_name YourDomainNameORIPAddr;   
         location/{  
             proxy_pass http://localhost:3000;  
             }  
-      }`   
+      }```   
     - 重启 Nginx 服务，`service nginx restart`
   - 启动应用服务器，`rails s` 或 `bundle exec passenger start`，此时通过上一步配置中的 `YourDomainNameORIPAddr` 可访问系统，如需服务器一直运行，可采用 daemon 方式运行应用服务器，命令为 `rails s -d` 或 `bundle exec passenger start --daemonize`，Done！
 ***
