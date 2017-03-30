@@ -36,7 +36,7 @@
         location/{  
             proxy_pass http://localhost:3000;  
             }  
-      }```   
+        }```
     - 重启 Nginx 服务，`service nginx restart`
   - 启动应用服务器，`rails s` 或 `bundle exec passenger start`，此时通过上一步配置中的 `YourDomainNameORIPAddr` 可访问系统，如需服务器一直运行，可采用 daemon 方式运行应用服务器，命令为 `rails s -d` 或 `bundle exec passenger start --daemonize`，Done！
 ***
