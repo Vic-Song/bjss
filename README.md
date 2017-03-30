@@ -1,4 +1,4 @@
-## Windows 部署方案（个人 Windows7 x64 实践）
+## Windows 部署方案（Windows7 x64 实践）
 - 1.Ruby on Rails 环境配置
   - 下载安装 [RailsInstaller for windows](http://railsinstaller.org/en)，注意勾选添加路径选项，方便命令行使用，否则需要后续手动添加
   - 安装完成后，进入命令行，输入 `ruby -v` 和 `rails -v` 查看 ruby 和 rails 相应版本，正常显示则表示安装无误，否则**重复上一步**
@@ -14,5 +14,14 @@
   - `git clone https://github.com/Vic-Song/bjss`
 - 4.进入 bjss 项目路径，依次执行 `bundle install`,`rake db:migrate`,完成 gem 包安装和数据库迁移
 - 5.rails s 启动服务器即可（development mode）
-***
-相关问题随手记
+**好吧还是决定放弃 Windows 部署了，各种‘bad idea’的评价，太折腾，不过上一部分可以作为 Windows 本地开发环境部署参考。申请换了 Linux 服务器，也就有了下一部分**
+
+## Linux(CentOS 6.8) 部署方案
+- 1.配置 Ruby on Rails 开发环境，直接参考[这里吧](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-centos-6-with-rvm)。测试方法跟前面的 windows 一样。
+- 2.安装并配置 mysql，*（本项目使用 mysql 作为数据库服务器，因为 rails 默认的 sqlite 只能处理单线程访问，无法应对较大访问量）*
+  - `yum install mysql-server `
+  - 创建数据库并授权相应用户，具体信息参见[配置文件](https://github.com/Vic-Song/bjss/blob/master/config/database.yml)，相应 mysql 命令为 `CREATE DATABASE bjss_development DEFAULT CHARACTER SET utf8;`   `GRANT ALL PRIVILEGES ON bjss_development.* TO 'username'@'localhost' IDENTIFIED BY 'password';`*(username 和 password 按实际配置修改)*
+- 3.完成数据库配置后，下载项目文件 `git clone https://github.com/Vic-Song/bjss` 至本地
+- 4.进入 bjss 目录，运行 `bundle install` 完成所需 gem 包安装
+- 5.进行数据库迁移，`rake db:migrate`
+- 6.启动服务器，默认 WEBrick 命令 `rails s`，或使用 passenger （Gemfile 文件已添加）`bundle exec passenger start`，Done！
