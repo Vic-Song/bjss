@@ -24,6 +24,8 @@ gem 'carrierwave'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'therubyracer'
+gem 'execjs'
 
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'sass-rails', '>=3.2'
